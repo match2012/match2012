@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<title>用户登陆</title>
+<link type="text/css" href="css/css.css" rel="stylesheet" />
+<script type='text/javascript' src="dwr/engine.js"></script>
+<script type='text/javascript' src="dwr/util.js"></script>
+<script type='text/javascript' src="dwr/interface/DataHelper.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#account").focus();
+	});
+	login = function(){
+		var account = $("#account").val();
+		DataHelper.loginAdmin(account, function(result){
+	        if (!result.isTrue) {
+	            alert(result.message)
+	        }
+	        else {
+				window.location.href="admin.jsp";
+	        }
+	    });
+	};
+	
+	checkEnter = function(e){
+		if(e.keyCode==13){
+			login();
+		}
+	}
+</script>
+</head>
+<body style="margin:auto; padding:30px">
+	<div class="signBlock">
+		<span style="float: left;"><strong>帐号：</strong>
+		<input type="password" id="account" onkeyup="checkEnter(event);" style="border:1px solid #ccc; height:18px; line-height:20px; width:120px;" value=""  /></span>
+		<span onclick="login();" class="sureBtn">登录</span>
+	</div>
+</body>
+</html>
+
+

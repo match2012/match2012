@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<title>用户登陆</title>
+<link type="text/css" href="css/css.css" rel="stylesheet" />
+<script type='text/javascript' src="dwr/engine.js"></script>
+<script type='text/javascript' src="dwr/util.js"></script>
+<script type='text/javascript' src="dwr/interface/DataHelper.js"></script>
+<script type="text/javascript" src="js/md5.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#user_name").focus();
+	});
+	login = function(){
+		var userName = $.trim($("#user_name").val());
+		var userPwd = hex_md5($.trim($("#user_pwd").val()));
+		DataHelper.login(userName, userPwd, function(result){
+	        if (!result.isTrue) {
+	            alert(result.message)
+	        }
+	        else {
+				window.location.href="match.jsp";
+	        }
+	    });
+	};
+	showReg = function(){
+		$("#loginDiv").animate({"margin-left": '-294px'}, "normal", function(){
+			$("#reg_name").focus();
+		});
+	};
+	reg = function(){
+		var userName = $.trim($("#reg_name").val());
+		var userPwd = hex_md5($.trim($("#reg_pwd").val()));
+		var chkPwd = hex_md5($.trim($("#chk_pwd").val()));
+		if(!(userName.length>0 &&userName.length<4 && userName.isCN())) {
+			$("#userName").focus();
+			alert("用户名请用真实姓名！");
+			return;
+		}
+		if(userPwd!=chkPwd) {
+			$("#chk_pwd").val("").focus();
+			alert("两次密码输入不正确！");
+			return;
+		}
+		DataHelper.reg(userName, userPwd, function(result){
+	        if (!result.isTrue) {
+	            alert(result.message)
+	        }
+	        else {
+				window.location.href="match.jsp";
+	        }
+	    });
+	};
+	showLogin = function(){
+		$("#loginDiv").animate({"margin-left": '0px'}, "normal", function(){
+			$("#user_name").focus();
+		});
+	};
+	
+	String.prototype.isCN = function(){
+		return /^[\u4e00-\u9fa5]+$/i.test(this);
+	};
+</script>
+</head>
+<body>
+	<div class="loginBlock">
+		<div id="loginDiv" style="width: 588px;">
+			<div class="case">
+				<div style="margin-top: 10px;"><strong>用户名：</strong><input type="text" id="user_name" onkeyup="if(event.keyCode == 13) login();"/></div>
+				<div style="margin-top: 10px;"><strong>密<span style="visibility: hidden;">户</span>码：</strong><input type="password" id="user_pwd" onkeyup="if(event.keyCode == 13) login();"/></div>
+				<div style="margin-top: 25px;">
+					<span style="float:right; margin-right: 10px;" onclick="login();" class="sureBtn" >登录</span>
+					<span style="margin-left: 10px;" onclick="showReg();" class="cancelBtn" >注册</span>
+				</div>
+			</div>
+			<div class="case">
+				<div style="margin-top: 5px;"><strong>用户名：</strong><input type="text" id="reg_name" id="reg_pwd" onkeyup="if(event.keyCode == 13) reg();"/></div>
+				<div style="margin-top: 2px;"><strong>密<span style="visibility: hidden;">户</span>码：</strong><input type="password" id="reg_pwd" onkeyup="if(event.keyCode == 13) reg();"/></div>
+				<div style="margin-top: 2px;"><strong>确<span style="visibility: hidden;">户</span>认：</strong><input type="password" id="chk_pwd" onkeyup="if(event.keyCode == 13) reg();"/></div>
+				<div style="margin-top: 15px;">
+					<span style="float:right; margin-right: 10px;" onclick="reg();" class="sureBtn" >注册</span>
+					<span style="margin-left: 10px;" onclick="showLogin();" class="cancelBtn" >返回</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
