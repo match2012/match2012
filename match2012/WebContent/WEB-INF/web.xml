@@ -2,11 +2,68 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>match2012</display-name>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>match.jsp</welcome-file>
   </welcome-file-list>
+
+  <!-- dwr servlet start-->
+	<servlet>
+		<servlet-name>dwr-invoker</servlet-name>
+		<servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>     
+	            <param-name>crossDomainSessionSecurity</param-name>     
+	            <param-value>false</param-value>     
+	    </init-param> 
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dwr-invoker</servlet-name>
+		<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping> 
+	<!-- dwr servlet start-->
+  
+  <!--网站启动读取配置文件servlet start -->
+	<servlet>
+		<description>Reading Config Files</description>
+		<servlet-name>WebConfigServlet</servlet-name>
+		<servlet-class>util.WebConfig</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet> 
+	
+	<!--网站启动读取配置文件servlet end  -->
+	
+	<!-- session setting start （分钟）-->
+	<session-config>
+		<session-timeout>120</session-timeout>
+	</session-config>
+	<!-- session setting end-->
+	
+	<context-param>
+		<param-name>account</param-name>
+		<param-value>match_admin</param-value>
+	</context-param>
+	<context-param>
+		<param-name>db_ip</param-name>
+		<param-value>127.0.0.1</param-value>
+	</context-param>
+	<context-param>
+		<param-name>db_port</param-name>
+		<param-value>3306</param-value>
+	</context-param>
+	<context-param>
+		<param-name>db_name</param-name>
+		<param-value>match_db</param-value>
+	</context-param>
+	<context-param>
+		<param-name>db_user</param-name>
+		<param-value>root</param-value>
+	</context-param>
+	<context-param>
+		<param-name>db_pwd</param-name>
+		<param-value>123123</param-value>
+	</context-param>
+	
+	
 </web-app>

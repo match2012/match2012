@@ -1,0 +1,11 @@
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://getahead.org/dwr//dwr20.dtd">
+<dwr>
+	<allow>
+		<create creator="new" javascript="DataHelper">
+			<param name="class" value="util.DataHelper" />
+		</create>
+		<!-- 模型转换器配置 -->
+		<convert match="java.lang.*" converter="bean"></convert>
+		<convert match="commonTool.*" converter="bean"></convert>
+	</allow>
+</dwr>
